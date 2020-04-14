@@ -48,7 +48,7 @@ def content_loss(original, predicted):
 def clip_value(image):
     return tf.clip_by_value(
         clip_value_min = 0.,
-        clp_value_max = 1.
+        clip_value_max = 1.
     )
 
 def main():
@@ -78,6 +78,7 @@ def main():
 
         return loss
     
+    print('Start...')
     for epoch in range(EPOCHS):
         loss = train_step(image)
         if epoch % 1000 == 0:
@@ -85,5 +86,7 @@ def main():
             save_img = tf.image.encode_jpeg(tf.cast(image[0] * 255, tf.uint8))
             tf.io.write_file(os.path.join(DIR, f'{epoch}.jpg'), save_img)
             print("Saved")
+    print('End...')
 
     
+main()
