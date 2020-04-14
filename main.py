@@ -47,6 +47,7 @@ def content_loss(original, predicted):
 
 def clip_value(image):
     return tf.clip_by_value(
+        image,
         clip_value_min = 0.,
         clip_value_max = 1.
     )
