@@ -1,9 +1,9 @@
 import tensorflow as tf
 
 
-class StyleModel(tf.keras.Model):
+class VanillaStyleModel(tf.keras.Model):
     def __init__(self, style_layers):
-        super(StyleModel, self).__init__()
+        super(VanillaStyleModel, self).__init__()
         vgg = tf.keras.applications.VGG19(
             include_top=False, weights='imagenet',
             pooling='avg'
@@ -30,9 +30,9 @@ class StyleModel(tf.keras.Model):
         return gm
 
 
-class ContentModel(tf.keras.Model):
+class VanillaContentModel(tf.keras.Model):
     def __init__(self, content_layers):
-        super(ContentModel, self).__init__()
+        super(VanillaContentModel, self).__init__()
         vgg = tf.keras.applications.VGG19(
             include_top=False, weights='imagenet',
             pooling='avg'
