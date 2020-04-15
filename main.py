@@ -64,8 +64,8 @@ def style_loss(original, predicted, len_style_layers):
 def calculate_loss(style_output, style_target, content_output,
                         content_target, len_style, len_content,
                         image):
-    s = 0.80 * style_loss(style_target, style_output, len_style)
-    c = 0.20 * content_loss(content_target, content_output, len_content)
+    s = 0.75 * style_loss(style_target, style_output, len_style)
+    c = 0.25 * content_loss(content_target, content_output, len_content)
     v = 30 * tf.image.total_variation(image)
     return s + c + v
 
@@ -89,7 +89,7 @@ def main():
     content_extractor = ContentModel(content_layers)
     style_extractor = StyleModel(style_layers)
 
-    optimizer = tf.keras.optimizers.Adam(0.1)
+    optimizer = tf.keras.optimizers.Adam(0.02)
     image = tf.Variable(tf.random.uniform(tf.shape(content_image),
                                           minval=0.,
                                           maxval=1.,
