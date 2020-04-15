@@ -1,5 +1,5 @@
 import tensorflow as tf
-from models import ContentModel, StyleModel
+from models import VanillaContentModel, VanillaStyleModel
 import os
 from absl import app
 from absl import flags
@@ -81,8 +81,8 @@ def main(argv):
     content_image = load_image(content_path)
     style_image = load_image(style_path)
 
-    style_extractor = StyleModel(style_layers)
-    content_extractor = ContentModel(content_layers)
+    style_extractor = VanillaStyleModel(style_layers)
+    content_extractor = VanillaContentModel(content_layers)
 
     style_target = style_extractor(style_image)
     content_target = content_extractor(content_image)
