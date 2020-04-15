@@ -1,13 +1,15 @@
 import tensorflow as tf
 from models import ContentModel, StyleModel
 import os
+from absl import app
+from absl import flags
 
 DIR = './saved'
 
-content_path = tf.keras.utils.get_file(
-    'YellowLabradorLooking_new.jpg', 'https://storage.googleapis.com/download.tensorflow.org/example_images/YellowLabradorLooking_new.jpg')
-style_path = tf.keras.utils.get_file(
-    'kandinsky5.jpg', 'https://storage.googleapis.com/download.tensorflow.org/example_images/Vassily_Kandinsky%2C_1913_-_Composition_7.jpg')
+FLAGS = flags.FLAGS
+
+flags.DEFINE_string('content', None, 'Path to Content Image..')
+flags.DEFINE_string('style', None, 'Path to Style Image..')
 
 EPOCHS = 10000
 
@@ -70,11 +72,11 @@ def define_loss(style_target, content_target):
         return s + c + v
     return calculate_loss
 
-def main():
-    content_layers, style_layers = get_layers()
+def main(argv):
+    content_path = FLAGS.content
+    style_path = FLAGS.style
 
-    num_style_layers = len(style_layers)
-    num_content_layers = len(content_layers)
+    content_layers, style_layers = get_layers()
 
     content_image = load_image(content_path)
     style_image = load_image(style_path)
@@ -103,12 +105,15 @@ def main():
         
         return loss
     
+    print("Start..")
     for epoch in range(EPOCHS + 1):
         loss = train_step(image)
         if epoch % 1000 == 0:
             print(f'Loss: {loss}')
             save_img = tf.image.encode_jpeg(tf.cast(image[0] * 255, tf.uint8))
-            tf.io.write_file(os.path.join(DIR, '1.jpg'), save_img)
+            tf.io.write_file(os.path.join(DIR, f'{epoch}.jpg'), save_img)
             print("saved")
-        
-main()
+    print("End...")
+
+if __name__ == '__main__':
+    app.run(main)
