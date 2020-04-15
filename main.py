@@ -105,7 +105,7 @@ def main():
     
     for epoch in range(EPOCHS + 1):
         loss = train_step(image)
-        if epoch % 1000:
+        if epoch % 1000 == 0:
             print(f'Loss: {loss}')
             save_img = tf.image.encode_jpeg(tf.cast(image[0] * 255, tf.uint8))
             tf.io.write_file(os.path.join(DIR, '1.jpg'), save_img)
