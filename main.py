@@ -111,3 +111,4 @@ def main():
             tf.io.write_file(os.path.join(DIR, '1.jpg'), save_img)
             print("saved")
         
+main()
